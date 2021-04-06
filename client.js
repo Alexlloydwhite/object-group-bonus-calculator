@@ -41,3 +41,66 @@ const employees = [
 // Ask questions when you don't.
 
 console.log( employees );
+
+const bonusMax = .13;
+const bonusMin = 0;
+
+function bonusCalc(employees){
+  for(let index of employees){
+    if ( index.reviewRating <= 2 ){
+      bonusP = 0;
+    } else if ( index.reviewRating === 3 ){
+      bonusP = .04;
+    } else if ( index.reviewRating === 4 ){
+      bonusP = .06;
+    } else if ( index.reviewRating === 5 ){
+      bonusP = .1;
+    } 
+    if ( index.employeeNumber < 10000 ){
+      bonusP += .05;
+    }
+    if ( index.annualSalary > 65000 ){
+      bonusP -= .01;
+    }
+    if ( bonusMax < bonusP ){
+      bonusP = .13;
+    } else if ( bonusP < bonusMin ) {
+      bonusP = 0;
+    }
+    
+    let bonus = Math.round(index.annualSalary * bonusP);
+    let object ={
+    name: index.name,
+    bonusPercentage: bonusP,
+    totalBonus: Math.round(index.annualSalary * bonusP),
+    totalCompensation: Number(index.annualSalary) + bonus,
+  }
+  console.log(object);
+}
+} 
+
+function bonusPercentageCalculation( employees ){
+  console.log('in bonusPercentageCalculation');
+  let bonusP;
+  if ( employees.reviewRating <= 2 ){
+    bonusP = 0;
+  } else if ( employees.reviewRating === 3 ){
+    bonusP = .04;
+  } else if ( employees.reviewRating === 4 ){
+    bonusP = .06;
+  } else if ( employees.reviewRating === 5 ){
+    bonusP = .1;
+  } 
+  if ( employees.employeeNumber < 10000 ){
+    bonusP += .05;
+  }
+  if ( employees.annualSalary > 65000 ){
+    bonusP -= .01;
+  }
+  if ( bonusMax < bonusP < bonusMin ){
+    console.log('WTF');
+  } 
+  return bonusP;
+}
+
+bonusCalc(employees);
