@@ -68,13 +68,13 @@ function bonusCalc(employees){
 
 function appendDom(object){
   let el = $('#employees');
-    el.append(`<li>`+
+  el.append(`<li>`+
     object.name + ' ' +
     object.bonusPercentage + ' ' +
     object.totalBonus + ' ' +
     object.totalCompensation + ' ' +
     `</li>`
-    );
+  );
 }
 
 function bonusPercentageCalculation(index){
