@@ -45,10 +45,15 @@ $(document).ready(function(){
     bonusCalc(employees);
   });
   $('#addEmployee').on( 'click', function(){
-    addEmployee($('#nameInput').val(), $('#employeeNumInput').val(), $('#salaryInput').val(), $('#ratingInput').val());
+    addEmployee(
+      $('#nameInput').val(), 
+      $('#employeeNumInput').val(), 
+      $('#salaryInput').val(), 
+      $('#ratingInput').val()
+    );
   });
 })
-
+console.log('JS');
 console.log( 'List of employees:', employees );
 
 const bonusMax = .13;
@@ -75,14 +80,14 @@ function bonusCalc(employees){
     bonusPercentageCalculation(index);
     let bonus = Math.round(index.annualSalary * bonusP);
     let object ={
-    name: index.name,
-    bonusPercentage: bonusP,
-    totalBonus: Math.round(index.annualSalary * bonusP),
-    totalCompensation: Number(index.annualSalary) + bonus,
-  }
+      name: index.name,
+      bonusPercentage: bonusP,
+      totalBonus: Math.round(index.annualSalary * bonusP),
+      totalCompensation: Number(index.annualSalary) + bonus,
+    }
   appendDom(object);
   console.log(object);
-}
+  }
 } 
 
 function appendDom(object){
