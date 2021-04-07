@@ -39,35 +39,21 @@ const employees = [
 
 // This is not a race. Everyone on your team should understand what is happening.
 // Ask questions when you don't.
+$(document).ready(function(){
+  console.log('JQ');
+  $('#calc').on( 'click', function() {
+    bonusCalc(employees);
+  });
+})
 
-console.log( employees );
+console.log( 'List of employees:', employees );
 
 const bonusMax = .13;
 const bonusMin = 0;
 
 function bonusCalc(employees){
   for(let index of employees){
-    if ( index.reviewRating <= 2 ){
-      bonusP = 0;
-    } else if ( index.reviewRating === 3 ){
-      bonusP = .04;
-    } else if ( index.reviewRating === 4 ){
-      bonusP = .06;
-    } else if ( index.reviewRating === 5 ){
-      bonusP = .1;
-    } 
-    if ( index.employeeNumber < 10000 ){
-      bonusP += .05;
-    }
-    if ( index.annualSalary > 65000 ){
-      bonusP -= .01;
-    }
-    if ( bonusMax < bonusP ){
-      bonusP = .13;
-    } else if ( bonusP < bonusMin ) {
-      bonusP = 0;
-    }
-    
+    bonusPercentageCalculation(index);
     let bonus = Math.round(index.annualSalary * bonusP);
     let object ={
     name: index.name,
@@ -75,32 +61,42 @@ function bonusCalc(employees){
     totalBonus: Math.round(index.annualSalary * bonusP),
     totalCompensation: Number(index.annualSalary) + bonus,
   }
+  appendDom(object);
   console.log(object);
 }
 } 
 
-function bonusPercentageCalculation( employees ){
-  console.log('in bonusPercentageCalculation');
-  let bonusP;
-  if ( employees.reviewRating <= 2 ){
-    bonusP = 0;
-  } else if ( employees.reviewRating === 3 ){
-    bonusP = .04;
-  } else if ( employees.reviewRating === 4 ){
-    bonusP = .06;
-  } else if ( employees.reviewRating === 5 ){
-    bonusP = .1;
-  } 
-  if ( employees.employeeNumber < 10000 ){
-    bonusP += .05;
-  }
-  if ( employees.annualSalary > 65000 ){
-    bonusP -= .01;
-  }
-  if ( bonusMax < bonusP < bonusMin ){
-    console.log('WTF');
-  } 
-  return bonusP;
+function appendDom(object){
+  let el = $('#employees');
+    el.append(`<li>`+
+    object.name + ' ' +
+    object.bonusPercentage + ' ' +
+    object.totalBonus + ' ' +
+    object.totalCompensation + ' ' +
+    `</li>`
+    );
 }
 
-bonusCalc(employees);
+function bonusPercentageCalculation(index){
+  console.log('in bonusPercentageCalculation');
+  if ( index.reviewRating <= 2 ){
+    bonusP = 0;
+  } else if ( index.reviewRating === 3 ){
+    bonusP = .04;
+  } else if ( index.reviewRating === 4 ){
+    bonusP = .06;
+  } else if ( index.reviewRating === 5 ){
+    bonusP = .1;
+  } 
+  if ( index.employeeNumber < 10000 ){
+    bonusP += .05;
+  }
+  if ( index.annualSalary > 65000 ){
+    bonusP -= .01;
+  }
+  if ( bonusMax < bonusP ){
+    bonusP = .13;
+  } else if ( bonusP < bonusMin ) {
+    bonusP = 0;
+  }
+}
