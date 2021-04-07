@@ -1,4 +1,4 @@
-const employees = [
+let employees = [
   {
     name: 'Atticus',
     employeeNumber: '2405',
@@ -44,6 +44,9 @@ $(document).ready(function(){
   $('#calc').on( 'click', function() {
     bonusCalc(employees);
   });
+  $('#addEmployee').on( 'click', function(){
+    addEmployee($('#nameInput').val(), $('#employeeNumInput').val(), $('#salaryInput').val(), $('#ratingInput').val());
+  });
 })
 
 console.log( 'List of employees:', employees );
@@ -51,7 +54,23 @@ console.log( 'List of employees:', employees );
 const bonusMax = .13;
 const bonusMin = 0;
 
+function addEmployee(Name, employeeNum, Salary, rating) {
+  let newEmployee = {
+    name: Name,
+    employeeNumber: employeeNum,
+    annualSalary: Salary,
+    reviewRating: rating,
+  }
+  employees.push(newEmployee);
+  $('#nameInput').val('');
+  $('#employeeNumInput').val('');
+  $('#salaryInput').val('');
+  $('#ratingInput').val('');
+  bonusCalc(employees);
+}
+
 function bonusCalc(employees){
+  $('#employees').empty();
   for(let index of employees){
     bonusPercentageCalculation(index);
     let bonus = Math.round(index.annualSalary * bonusP);
@@ -69,10 +88,10 @@ function bonusCalc(employees){
 function appendDom(object){
   let el = $('#employees');
   el.append(`<li>`+
-    object.name + ' ' +
-    object.bonusPercentage + ' ' +
-    object.totalBonus + ' ' +
-    object.totalCompensation + ' ' +
+    `<h3> Name: ` + object.name + ' ' +
+    `Bonus Percentage: ` + object.bonusPercentage*100 + '% ' +
+    `Total Bonus: $` + object.totalBonus + ' ' +
+    `Total Compensation: $` + object.totalCompensation + ' ' +
     `</li>`
   );
 }
